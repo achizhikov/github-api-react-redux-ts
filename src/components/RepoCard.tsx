@@ -5,7 +5,7 @@ import { IRepo } from '../models/models'
 
 export default function RepoCard({ repo }: { repo: IRepo }) {
   const { addFavourite, removeFavourite } = useActions()
-  const { favourites } = useAppSelector((state) => state.github)
+  const { favourites } = useAppSelector(state => state.github)
   const [isFav, setIsFav] = useState(favourites.includes(repo.html_url))
   const addToFavourites = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()

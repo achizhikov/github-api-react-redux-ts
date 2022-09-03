@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import RepoCard from '../components/RepoCard'
-import { useDebounce } from '../hooks/debounce'
+import {useDebounce} from '../hooks/debounce'
 import {
   useLazyGetUserReposQuery,
   useSearchUsersQuery
@@ -10,11 +10,11 @@ export default function HomePage() {
   const [search, setSearch] = useState('')
   const [dropdown, setDropdown] = useState(false)
   const debounced = useDebounce(search)
-  const { isLoading, isError, data } = useSearchUsersQuery(debounced, {
+  const {isLoading, isError, data} = useSearchUsersQuery(debounced, {
     skip: debounced.length <= 3,
     refetchOnFocus: true
   })
-  const [fetchRepos, { isLoading: areReposLoading, data: repos }] =
+  const [fetchRepos, {isLoading: areReposLoading, data: repos}] =
     useLazyGetUserReposQuery()
   useEffect(() => {
     setDropdown(debounced.length > 3 && data?.length! > 0)
@@ -23,6 +23,7 @@ export default function HomePage() {
     fetchRepos(username)
     setDropdown(false)
   }
+
   return (
     <div className='flex justify-center pt-10 mx-auto h-screen w-screen'>
       {isError && (
@@ -34,12 +35,12 @@ export default function HomePage() {
           className='border py-2 px-4 w-full h-[42px] mb-2'
           placeholder='Search for Github username...'
           value={search}
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={event => setSearch(event.target.value)}
         />
         {dropdown && (
           <ul className='list-none absolute top-[42px] left-0 right-0 max-h-[200px] overflow-y-scroll shadow-md bg-white'>
             {isLoading && <p className='text-center'>Loading...</p>}
-            {data?.map((user) => (
+            {data?.map(user => (
               <li
                 key={user.id}
                 onClick={() => clickHandler(user.login)}
@@ -53,7 +54,7 @@ export default function HomePage() {
           {areReposLoading && (
             <p className='text-center'>Repos are loading...</p>
           )}
-          {repos?.map((repo) => (
+          {repos?.map(repo => (
             <RepoCard repo={repo} key={repo.id} />
           ))}
         </div>
